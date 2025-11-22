@@ -32,9 +32,9 @@ function BlogPost() {
               h2: ({ children }) => <h2 className="mt-12 mb-4 text-[1.75rem] text-text-primary md:text-2xl md:mt-8">{children}</h2>,
               h3: ({ children }) => <h3 className="mt-8 mb-3 text-xl text-text-primary">{children}</h3>,
               p: ({ children }) => <p className="mb-6 text-text-secondary">{children}</p>,
-              ul: ({ children }) => <ul className="mb-6 ml-6 list-disc text-text-secondary">{children}</ul>,
-              ol: ({ children }) => <ol className="mb-6 ml-6 list-decimal text-text-secondary">{children}</ol>,
-              li: ({ children }) => <li className="mb-2">{children}</li>,
+              ul: ({ children }) => <ul className="mb-6 ml-6 list-disc text-text-secondary space-y-2">{children}</ul>,
+              ol: ({ children }) => <ol className="mb-6 ml-6 list-decimal text-text-secondary space-y-2">{children}</ol>,
+              li: ({ children }) => <li className="leading-[1.8] pl-1">{children}</li>,
               code: ({ className, children, ...props }: any) => {
                 const isInline = !className
                 if (isInline) {
