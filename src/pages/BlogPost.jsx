@@ -1,5 +1,4 @@
 import { Link, useParams } from 'react-router-dom'
-import './BlogPost.css'
 
 function BlogPost() {
   const { id } = useParams()
@@ -87,7 +86,7 @@ function BlogPost() {
   
   if (!post) {
     return (
-      <div className="blog-post-page">
+      <div className="max-w-[800px] mx-auto py-12 px-8 bg-background md:px-4 md:py-8">
         <p>게시글을 찾을 수 없습니다.</p>
         <Link to="/blog">블로그로 돌아가기</Link>
       </div>
@@ -95,22 +94,54 @@ function BlogPost() {
   }
 
   return (
-    <div className="blog-post-page">
-      <Link to="/blog" className="back-link">← 블로그로 돌아가기</Link>
+    <div className="max-w-[800px] mx-auto py-12 px-8 bg-background md:px-4 md:py-8">
+      <Link 
+        to="/blog" 
+        className="inline-flex items-center text-text-secondary no-underline mb-8 font-semibold text-sm transition-colors duration-200 hover:text-text-primary"
+      >
+        ← 블로그로 돌아가기
+      </Link>
       
-      <article className="post-content">
-        <header className="post-header">
-          <div className="post-meta">
-            <span className="post-category">{post.category}</span>
-            <span className="post-date">{post.date}</span>
+      <article className="bg-background p-0">
+        <header className="mb-12 pb-8 border-b border-border">
+          <div className="flex items-center gap-2 mb-6 text-sm">
+            <span className="text-primary font-semibold">{post.category}</span>
+            <span className="text-text-tertiary leading-[1.8] before:content-['·'] before:mr-2">
+              {post.date}
+            </span>
           </div>
-          <h1>{post.title}</h1>
+          <h1 className="m-0 text-4xl leading-tight tracking-tight text-text-primary md:text-3xl">
+            {post.title}
+          </h1>
         </header>
         
-        <div className="post-body">
-          {post.content.split('\n').map((paragraph, index) => (
-            <p key={index}>{paragraph}</p>
-          ))}
+        <div className="leading-[1.8] text-text-primary text-base">
+          {post.content.split('\n').map((paragraph, index) => {
+            // 코드 블록 처리
+            if (paragraph.trim().startsWith('```')) {
+              return null // 코드 블록 시작/끝은 무시
+            }
+            if (paragraph.includes('```')) {
+              return null
+            }
+            // 제목 처리
+            if (paragraph.trim().startsWith('##')) {
+              return (
+                <h2 key={index} className="mt-12 mb-4 text-[1.75rem] text-text-primary md:text-2xl md:mt-8">
+                  {paragraph.replace('##', '').trim()}
+                </h2>
+              )
+            }
+            // 일반 텍스트
+            return (
+              <p 
+                key={index}
+                className="mb-6 whitespace-pre-wrap text-text-secondary"
+              >
+                {paragraph}
+              </p>
+            )
+          })}
         </div>
       </article>
     </div>

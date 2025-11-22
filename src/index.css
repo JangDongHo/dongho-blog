@@ -1,100 +1,70 @@
-:root {
-  /* 토스 스타일 컬러 */
-  --color-primary: #3182F6;
-  --color-text-primary: #191F28;
-  --color-text-secondary: #4E5968;
-  --color-text-tertiary: #8B95A1;
-  --color-background: #FFFFFF;
-  --color-background-secondary: #F9FAFB;
-  --color-border: #E5E8EB;
-  --color-hover: #F2F4F6;
-  
-  font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Pretendard', 'Roboto', 'Noto Sans KR', 'Segoe UI', 'Malgun Gothic', sans-serif;
-  line-height: 1.6;
-  font-weight: 400;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-  color: var(--color-text-primary);
-  background-color: var(--color-background);
+@layer base {
+  * {
+    @apply m-0 p-0 box-border;
+  }
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  body {
+    @apply m-0 min-h-screen bg-background;
+  }
+
+  a {
+    @apply text-text-primary no-underline transition-colors duration-200;
+  }
+
+  a:hover {
+    @apply text-primary;
+  }
+
+  h1 {
+    @apply text-4xl leading-tight mb-4 font-bold tracking-tight;
+  }
+
+  h2 {
+    @apply text-3xl leading-snug mb-3 font-bold tracking-tight;
+  }
+
+  h3 {
+    @apply text-2xl leading-snug mb-2.5 font-bold tracking-tight;
+  }
+
+  p {
+    @apply mb-4 leading-relaxed;
+  }
+
+  button {
+    @apply rounded-lg border border-border px-5 py-2.5 text-base font-semibold font-sans bg-background text-text-primary cursor-pointer transition-all duration-200;
+  }
+
+  button:hover {
+    @apply bg-hover border-text-tertiary;
+  }
+
+  button:focus,
+  button:focus-visible {
+    @apply outline-2 outline-primary outline-offset-2;
+  }
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+@layer base {
+  code {
+    @apply bg-background-secondary px-2 py-1 rounded font-mono text-sm text-primary;
+  }
 
-body {
-  margin: 0;
-  min-height: 100vh;
-  background-color: var(--color-background);
-}
+  pre {
+    @apply bg-text-primary text-[#E5E8EB] p-6 rounded-xl overflow-x-auto my-8 leading-relaxed;
+  }
 
-a {
-  color: var(--color-text-primary);
-  text-decoration: none;
-  transition: color 0.2s;
-}
+  pre code {
+    @apply bg-transparent p-0 text-inherit text-sm;
+  }
 
-a:hover {
-  color: var(--color-primary);
-}
-
-h1 {
-  font-size: 2.5em;
-  line-height: 1.3;
-  margin-bottom: 1rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-}
-
-h2 {
-  font-size: 2em;
-  line-height: 1.4;
-  margin-bottom: 0.8rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-}
-
-h3 {
-  font-size: 1.5em;
-  line-height: 1.4;
-  margin-bottom: 0.6rem;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-}
-
-p {
-  margin-bottom: 1rem;
-  line-height: 1.7;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid var(--color-border);
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 600;
-  font-family: inherit;
-  background-color: var(--color-background);
-  color: var(--color-text-primary);
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-button:hover {
-  background-color: var(--color-hover);
-  border-color: var(--color-text-tertiary);
-}
-
-button:focus,
-button:focus-visible {
-  outline: 2px solid var(--color-primary);
-  outline-offset: 2px;
+  h2 {
+    @apply mt-12 mb-4 text-[1.75rem] text-text-primary md:text-2xl md:mt-8;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -109,4 +79,3 @@ button:focus-visible {
     --color-hover: #26262F;
   }
 }
-
