@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { CONTENT_MAX_WIDTH } from '../config/layout'
 import { useTheme } from '../contexts/ThemeContext'
@@ -6,7 +6,7 @@ import { getAllPosts } from '../posts/posts'
 import type { BlogPost } from '../types'
 import { formatDateToKorean } from '../utils/date'
 
-const POSTS_PER_PAGE = 5
+const POSTS_PER_PAGE = 10
 
 function Blog() {
   const [activeCategory, setActiveCategory] = useState<string>('전체')
@@ -23,7 +23,13 @@ function Blog() {
     category: post.category ?? "-"
   }))
 
-  const categories = ['전체', 'FE', 'BE', '회고']
+  // 게시글에서 사용된 카테고리를 동적으로 추출
+  const categories = useMemo(() => {
+    const uniqueCategories = Array.from(
+      new Set(posts.map(post => post.category).filter(cat => cat && cat !== "-"))
+    ).sort()
+    return ['전체', ...uniqueCategories]
+  }, [posts])
   
   const filteredPosts = activeCategory === '전체' 
     ? posts 
