@@ -1,3 +1,10 @@
+---
+title: JavaScript 최신 기능들
+date: 2025-11-15
+category: JavaScript
+excerpt: ES2024의 새로운 기능들과 활용법을 살펴봅니다.
+---
+
 JavaScript는 계속해서 발전하고 있으며, 매년 새로운 기능들이 추가됩니다.
 
 ## ES2024의 주요 기능

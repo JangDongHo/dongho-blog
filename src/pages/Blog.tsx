@@ -4,6 +4,7 @@ import { CONTENT_MAX_WIDTH } from '../config/layout'
 import { useTheme } from '../contexts/ThemeContext'
 import { getAllPosts } from '../posts/posts'
 import type { BlogPost } from '../types'
+import { formatDateToKorean } from '../utils/date'
 
 function Blog() {
   const [activeCategory, setActiveCategory] = useState<string>('전체')
@@ -13,9 +14,9 @@ function Blog() {
   const posts: BlogPost[] = getAllPosts().map(post => ({
     id: post.id,
     title: post.title,
-    date: post.displayDate,
+    date: formatDateToKorean(post.date),
     excerpt: post.excerpt,
-    category: post.category === 'React' || post.category === 'Tools' || post.category === 'JavaScript' ? '개발' : post.category
+    category: post.category ?? "-"
   }))
 
   const categories = ['전체', 'FE', 'BE', '회고']
@@ -67,9 +68,6 @@ function Blog() {
                 {post.title}
               </h2>
               <p className="text-text-secondary leading-[1.6] mb-5 text-[0.9375rem] flex-1">{post.excerpt}</p>
-              <span className="text-primary font-semibold text-sm">
-                더 알아보기 →
-              </span>
             </article>
           ))}
         </main>

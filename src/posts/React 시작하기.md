@@ -1,3 +1,10 @@
+---
+title: React 시작하기
+date: 2025-11-20
+category: React
+excerpt: React의 기본 개념과 시작하는 방법에 대해 알아봅니다.
+---
+
 React는 Facebook에서 개발한 사용자 인터페이스를 만들기 위한 JavaScript 라이브러리입니다.
 
 ## 주요 특징
