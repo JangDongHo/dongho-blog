@@ -25,7 +25,7 @@ function BlogPost() {
           <h1 className="m-0 text-[2.5rem] leading-[1.3] tracking-[-0.02em] text-text-primary md:text-[2rem]">{post.title}</h1>
         </header>
         
-        <div className="post-body leading-[1.8] text-text-primary text-base">
+        <div className="post-body leading-[1.8] text-text-primary text-[1.1rem]">
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             components={{
@@ -65,6 +65,47 @@ function BlogPost() {
                   {children}
                 </blockquote>
               ),
+              img: ({ src, alt, ...props }: any) => {
+                // 경로 변환 로직
+                let imageSrc = src || ''
+                
+                // 외부 URL인 경우 그대로 사용
+                if (imageSrc.startsWith('http://') || imageSrc.startsWith('https://')) {
+                  // 외부 이미지 그대로 사용
+                }
+                // 절대 경로(/images/...)인 경우 그대로 사용
+                else if (imageSrc.startsWith('/images/')) {
+                  // 이미 절대 경로면 그대로 사용
+                }
+                // 상대 경로인 경우 게시글 ID 기반 폴더로 변환
+                else {
+                  // ./images/file.png 또는 images/file.png 또는 file.png
+                  const filename = imageSrc
+                    .replace(/^\.\/images\//, '')
+                    .replace(/^images\//, '')
+                    .replace(/^\.\//, '')
+                  imageSrc = `/images/${post.id}/${filename}`
+                }
+                
+                return (
+                  <div className="my-8">
+                    <img 
+                      src={imageSrc} 
+                      alt={alt || ''} 
+                      className="w-full h-auto rounded-xl shadow-lg"
+                      loading="lazy"
+                      onError={() => {
+                        // 이미지 로드 실패 시 기본 이미지 또는 에러 처리
+                        console.warn(`이미지를 로드할 수 없습니다: ${imageSrc}`)
+                      }}
+                      {...props}
+                    />
+                    {alt && alt !== 'image.png' && (
+                      <p className="text-center text-text-tertiary text-sm mt-2 italic">{alt}</p>
+                    )}
+                  </div>
+                )
+              },
             }}
           >
             {post.content}

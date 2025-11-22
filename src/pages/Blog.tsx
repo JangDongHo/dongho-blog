@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { CONTENT_MAX_WIDTH } from '../config/layout'
+import { HEADER_MAX_WIDTH } from '../config/layout'
 import { useTheme } from '../contexts/ThemeContext'
 import { getAllPosts } from '../posts/posts'
 import type { BlogPost } from '../types'
@@ -69,13 +69,13 @@ function Blog() {
   return (
     <div className="p-0 bg-background">
       <header className="bg-background pt-12 px-8 pb-8 mb-8 border-b border-border md:pt-8 md:px-4 md:pb-6">
-        <h1 className={`mb-2 ${CONTENT_MAX_WIDTH} mx-auto`}>장동호</h1>
-        <p className={`text-text-secondary text-lg ${CONTENT_MAX_WIDTH} mx-auto md:text-base`}>
+        <h1 className={`mb-2 ${HEADER_MAX_WIDTH} mx-auto`}>장동호</h1>
+        <p className={`text-text-secondary text-lg ${HEADER_MAX_WIDTH} mx-auto md:text-base`}>
           Slow and steady, with pleasure.
         </p>
       </header>
 
-      <div className={`${CONTENT_MAX_WIDTH} mx-auto px-8 pb-16 bg-background md:px-4 md:pb-12`}>
+      <div className={`${HEADER_MAX_WIDTH} mx-auto px-8 pb-16 bg-background md:px-4 md:pb-12`}>
         <aside className="top-[100px] h-fit mb-8">
           <div className="flex gap-3 flex-wrap">
             {categories.map(category => (
