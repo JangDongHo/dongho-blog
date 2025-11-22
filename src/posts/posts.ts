@@ -1,18 +1,21 @@
-// 마크다운 파일 import
 import type { Post } from '../types'
 import { parseMarkdown } from '../utils/parseMarkdown'
-import jsPostContent from './JavaScript 최신 기능들.md?raw'
-import reactPostContent from './React 시작하기.md?raw'
-import vitePostContent from './Vite로 빠른 개발 환경 구축.md?raw'
-import designPostContent from './프로덕트 디자인 철학.md?raw'
+
+// src/posts 폴더의 모든 .md 파일을 자동으로 import (posts.ts 제외)
+const markdownModules = import.meta.glob('./*.md', { 
+  eager: true, 
+  query: '?raw',
+  import: 'default'
+}) as Record<string, string>
 
 // 게시글 메타데이터 (마크다운 파일의 frontmatter에서 파싱)
-export const posts: Post[] = [
-  parseMarkdown(reactPostContent, 'React 시작하기.md'),
-  parseMarkdown(vitePostContent, 'Vite로 빠른 개발 환경 구축.md'),
-  parseMarkdown(jsPostContent, 'JavaScript 최신 기능들.md'),
-  parseMarkdown(designPostContent, '프로덕트 디자인 철학.md')
-].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()) // 날짜순 정렬
+export const posts: Post[] = Object.entries(markdownModules)
+  .map(([path, content]) => {
+    // 경로에서 파일명 추출 (예: './React 시작하기.md' -> 'React 시작하기.md')
+    const filename = path.replace('./', '')
+    return parseMarkdown(content, filename)
+  })
+  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()) // 날짜순 정렬
 
 // ID(slug)로 게시글 찾기
 export function getPostById(id: string | undefined): Post | undefined {
