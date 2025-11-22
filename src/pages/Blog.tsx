@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { CONTENT_MAX_WIDTH } from '../config/layout'
 import { useTheme } from '../contexts/ThemeContext'
@@ -6,10 +6,14 @@ import { getAllPosts } from '../posts/posts'
 import type { BlogPost } from '../types'
 import { formatDateToKorean } from '../utils/date'
 
+const POSTS_PER_PAGE = 5
+
 function Blog() {
   const [activeCategory, setActiveCategory] = useState<string>('전체')
+  const [displayCount, setDisplayCount] = useState<number>(POSTS_PER_PAGE)
   const navigate = useNavigate()
   const { isDark } = useTheme()
+  const observerTarget = useRef<HTMLDivElement>(null)
   
   const posts: BlogPost[] = getAllPosts().map(post => ({
     id: post.id,
@@ -24,6 +28,37 @@ function Blog() {
   const filteredPosts = activeCategory === '전체' 
     ? posts 
     : posts.filter(post => post.category === activeCategory)
+
+  const displayedPosts = filteredPosts.slice(0, displayCount)
+  const hasMore = displayCount < filteredPosts.length
+
+  // 카테고리 변경 시 표시 개수 리셋
+  useEffect(() => {
+    setDisplayCount(POSTS_PER_PAGE)
+  }, [activeCategory])
+
+  // Intersection Observer로 무한 스크롤 구현
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          setDisplayCount((prev) => prev + POSTS_PER_PAGE)
+        }
+      },
+      { threshold: 0.1 }
+    )
+
+    const currentTarget = observerTarget.current
+    if (currentTarget) {
+      observer.observe(currentTarget)
+    }
+
+    return () => {
+      if (currentTarget) {
+        observer.unobserve(currentTarget)
+      }
+    }
+  }, [hasMore])
 
   return (
     <div className="p-0 bg-background">
@@ -54,11 +89,14 @@ function Blog() {
         </aside>
 
         <main className="grid grid-cols-[repeat(auto-fill,minmax(320px,1fr))] gap-6 md:grid-cols-1 md:gap-4">
-          {filteredPosts.map(post => (
+          {displayedPosts.map((post, index) => (
             <article 
               key={post.id} 
               onClick={() => navigate(`/posts/${post.id}`)}
-              className="bg-background p-8 rounded-xl border border-border transition-all duration-200 cursor-pointer flex flex-col hover:-translate-y-1 hover:shadow-[0_12px_24px_rgba(0,0,0,0.08)] hover:border-text-tertiary md:p-6"
+              className="post-card bg-background p-8 rounded-xl border border-border transition-all duration-200 cursor-pointer flex flex-col hover:-translate-y-1 hover:shadow-[0_12px_24px_rgba(0,0,0,0.08)] hover:border-text-tertiary md:p-6"
+              style={{
+                animationDelay: `${index * 0.1}s`
+              }}
             >
               <div className="flex items-center gap-2 mb-4 text-sm">
                 <span className="text-primary font-semibold">{post.category}</span>
@@ -71,6 +109,13 @@ function Blog() {
             </article>
           ))}
         </main>
+        
+        {/* 무한 스크롤 감지용 요소 */}
+        {hasMore && (
+          <div ref={observerTarget} className="h-20 flex items-center justify-center">
+            <div className="text-text-tertiary text-sm">로딩 중...</div>
+          </div>
+        )}
       </div>
     </div>
   )
