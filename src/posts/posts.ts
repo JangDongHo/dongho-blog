@@ -20,7 +20,9 @@ export const posts: Post[] = Object.entries(markdownModules)
 // ID(slug)로 게시글 찾기
 export function getPostById(id: string | undefined): Post | undefined {
   if (!id) return undefined
-  return posts.find(post => post.id === id)
+
+  const decodedId = decodeURIComponent(id)
+  return posts.find(post => post.id === decodedId || post.id === id)
 }
 
 // 모든 게시글 가져오기
