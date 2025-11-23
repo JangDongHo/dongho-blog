@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom'
+import { GITHUB_USERNAME } from '../config/constants'
 import { useTheme } from '../contexts/ThemeContext'
-
-const GITHUB_USERNAME = 'JangDongHo' // GitHub 사용자명을 여기에 입력하세요
 
 function Header() {
   const { isDark, toggleTheme } = useTheme()
