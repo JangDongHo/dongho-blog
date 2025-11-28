@@ -10,7 +10,7 @@
   --color-border: #E5E8EB;
   --color-hover: #F2F4F6;
   
-  --font-family-base: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Pretendard', 'Roboto', 'Noto Sans KR', 'Segoe UI', 'Malgun Gothic', sans-serif;
+  --font-family-base: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Roboto', 'Noto Sans KR', 'Segoe UI', 'Malgun Gothic', sans-serif;
 }
 
 @layer base {
