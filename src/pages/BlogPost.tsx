@@ -65,7 +65,7 @@ function BlogPost() {
                   {children}
                 </blockquote>
               ),
-              img: ({ src, alt, ...props }: any) => {
+              img: ({ src, alt, title, ...props }: any) => {
                 // 경로 변환 로직
                 let imageSrc = src || ''
                 
@@ -87,20 +87,39 @@ function BlogPost() {
                   imageSrc = `/images/${post.id}/${filename}`
                 }
                 
+                // width 추출: title에서 "width:XX%" 형식 또는 alt에서 "alt|XX%" 형식
+                let imageWidth = '100%'
+                if (title) {
+                  const widthMatch = title.match(/width:\s*(\d+%)/i)
+                  if (widthMatch) {
+                    imageWidth = widthMatch[1]
+                  }
+                } else if (alt) {
+                  const altWidthMatch = alt.match(/\|(\d+%)/)
+                  if (altWidthMatch) {
+                    imageWidth = altWidthMatch[1]
+                    // alt에서 width 부분 제거
+                    alt = alt.replace(/\|\d+%/, '')
+                  }
+                }
+                
                 return (
                   <div className="my-8">
-                    <img 
-                      src={imageSrc} 
-                      alt={alt || ''} 
-                      className="w-full h-auto rounded-xl shadow-lg"
-                      loading="lazy"
-                      onError={() => {
-                        // 이미지 로드 실패 시 기본 이미지 또는 에러 처리
-                        console.warn(`이미지를 로드할 수 없습니다: ${imageSrc}`)
-                      }}
-                      {...props}
-                    />
-                    {alt && alt !== 'image.png' && (
+                    <div className="flex justify-center">
+                      <img 
+                        src={imageSrc} 
+                        alt={alt || ''} 
+                        style={{ width: imageWidth, maxWidth: '100%' }}
+                        className="h-auto rounded-xl shadow-lg"
+                        loading="lazy"
+                        onError={() => {
+                          // 이미지 로드 실패 시 기본 이미지 또는 에러 처리
+                          console.warn(`이미지를 로드할 수 없습니다: ${imageSrc}`)
+                        }}
+                        {...props}
+                      />
+                    </div>
+                    {alt && alt !== 'image.png' && alt.trim() !== '' && (
                       <p className="text-center text-text-tertiary text-sm mt-2 italic">{alt}</p>
                     )}
                   </div>
