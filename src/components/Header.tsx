@@ -28,24 +28,24 @@ function Header() {
             }}
           />
         </Link>
-        <nav className="flex items-center gap-6 md:gap-4">
+        <nav className="flex items-center gap-4 md:gap-3">
           <Link
             to="/"
-            className={`text-sm font-medium transition-colors duration-200 ${
+            className={`px-4 py-2 rounded-lg text-base font-semibold transition-all duration-200 ${
               isActive('/')
                 ? 'text-text-primary'
-                : 'text-text-secondary hover:text-text-primary'
-            }`}
+                : 'text-text-secondary'
+            } hover:text-text-primary hover:bg-hover`}
           >
             Post
           </Link>
           <Link
             to="/about"
-            className={`text-sm font-medium transition-colors duration-200 ${
+            className={`px-4 py-2 rounded-lg text-base font-semibold transition-all duration-200 ${
               isActive('/about')
                 ? 'text-text-primary'
-                : 'text-text-secondary hover:text-text-primary'
-            }`}
+                : 'text-text-secondary'
+            } hover:text-text-primary hover:bg-hover`}
           >
             About
           </Link>

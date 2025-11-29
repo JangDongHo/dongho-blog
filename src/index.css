@@ -51,6 +51,18 @@
     @apply mt-12 mb-4 text-[1.75rem] text-[var(--color-text-primary)] md:text-2xl md:mt-8;
   }
 
+  /* 모바일에서는 이미지 100%, 데스크톱에서는 설정된 width 사용 */
+  .post-body .post-image {
+    width: 100% !important;
+    max-width: 100%;
+  }
+
+  @media (min-width: 768px) {
+    .post-body .post-image {
+      width: var(--image-width, 100%) !important;
+    }
+  }
+
   h3 {
     @apply text-[1.5em] leading-[1.4] mb-[0.6rem] font-bold tracking-[-0.01em];
   }
@@ -123,8 +135,8 @@
   opacity: 0;
 }
 
-/* 다크 모드 스타일 */
-.dark {
+/* 다크 모드 스타일 - 사용자 설정이 우선 */
+html.dark {
   --color-primary: #3182F6;
   --color-text-primary: #FFFFFF;
   --color-text-secondary: #B0B8C1;
@@ -137,7 +149,7 @@
 
 /* 시스템 다크 모드 설정 (사용자 설정이 없을 때만 적용) */
 @media (prefers-color-scheme: dark) {
-  :root:not(.light) {
+  :root:not(.light):not(.dark) {
     --color-primary: #3182F6;
     --color-text-primary: #FFFFFF;
     --color-text-secondary: #B0B8C1;

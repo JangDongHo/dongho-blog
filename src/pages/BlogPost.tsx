@@ -109,8 +109,11 @@ function BlogPost() {
                       <img 
                         src={imageSrc} 
                         alt={alt || ''} 
-                        style={{ width: imageWidth, maxWidth: '100%' }}
-                        className="h-auto rounded-xl shadow-lg"
+                        style={{ 
+                          '--image-width': imageWidth
+                        } as React.CSSProperties & { '--image-width': string }}
+                        className="h-auto rounded-xl shadow-lg post-image"
+                        data-width={imageWidth}
                         loading="lazy"
                         onError={() => {
                           // 이미지 로드 실패 시 기본 이미지 또는 에러 처리

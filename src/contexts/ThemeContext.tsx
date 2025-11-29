@@ -15,15 +15,9 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
       if (saved) {
         return saved === 'dark'
       }
-      // 저장된 값이 없으면 시스템 설정 확인
-      const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-      // 초기 로드 시 시스템 설정 반영
-      if (systemPrefersDark) {
-        document.documentElement.classList.add('dark')
-      } else {
-        document.documentElement.classList.remove('dark')
-      }
-      return systemPrefersDark
+      // 저장된 값이 없으면 기본값은 라이트 모드
+      document.documentElement.classList.remove('dark')
+      return false
     }
     return false
   })
