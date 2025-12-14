@@ -105,6 +105,34 @@
     color: inherit;
     font-size: 0.875rem;
   }
+
+  /* 표 스타일 */
+  table {
+    @apply w-full border-collapse my-8;
+    border-spacing: 0;
+  }
+
+  thead {
+    @apply bg-[var(--color-background-secondary)];
+  }
+
+  th {
+    @apply px-4 py-3 text-left font-semibold text-[var(--color-text-primary)] border-b-2 border-[var(--color-primary)];
+    font-size: 0.95rem;
+  }
+
+  td {
+    @apply px-4 py-3 text-[var(--color-text-primary)] border-b border-[var(--color-border)];
+    font-size: 0.95rem;
+  }
+
+  tbody tr {
+    @apply transition-colors duration-200;
+  }
+
+  tbody tr:last-child td {
+    @apply border-b-0;
+  }
 }
 
 /* 게시글 카드 애니메이션 */
