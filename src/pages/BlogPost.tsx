@@ -66,6 +66,7 @@ function BlogPost() {
                 </a>
               ),
               strong: ({ children }) => <strong className="font-bold text-text-primary">{children}</strong>,
+              hr: () => <hr className="my-8 border-0 border-t border-border" />,
               blockquote: ({ children }) => (
                 <blockquote className="border-l-4 border-primary pl-4 my-6 italic text-text-secondary">
                   {children}
