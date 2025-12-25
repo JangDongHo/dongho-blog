@@ -1,6 +1,9 @@
+import 'katex/dist/katex.min.css'
 import ReactMarkdown from 'react-markdown'
 import { useParams } from 'react-router-dom'
+import rehypeKatex from 'rehype-katex'
 import remarkGfm from 'remark-gfm'
+import remarkMath from 'remark-math'
 import { CONTENT_MAX_WIDTH } from '../config/layout'
 import { getPostById } from '../posts/posts'
 import { formatDateToKorean } from '../utils/date'
@@ -27,7 +30,8 @@ function BlogPost() {
         
         <div className="post-body leading-[1.8] text-text-primary text-[1.1rem]">
           <ReactMarkdown
-            remarkPlugins={[remarkGfm]}
+            remarkPlugins={[remarkGfm, remarkMath]}
+            rehypePlugins={[rehypeKatex]}
             components={{
               h2: ({ children }) => <h2 className="mt-12 mb-4 text-[1.75rem] text-text-primary md:text-2xl md:mt-8">{children}</h2>,
               h3: ({ children }) => <h3 className="mt-8 mb-3 text-xl text-text-primary">{children}</h3>,
@@ -39,7 +43,7 @@ function BlogPost() {
                 const isInline = !className
                 if (isInline) {
                   return (
-                    <code className="bg-background-secondary px-2 py-1 rounded text-primary text-sm font-mono" {...props}>
+                    <code className="bg-border px-2 py-1 rounded text-text-primary text-sm font-mono" {...props}>
                       {children}
                     </code>
                   )
