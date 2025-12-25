@@ -96,13 +96,19 @@
   }
 
   pre {
-    @apply bg-[var(--color-text-primary)] text-[#E5E8EB] p-6 rounded-xl overflow-x-auto my-8;
+    @apply p-6 rounded-xl overflow-x-auto my-8 border border-border;
     line-height: 1.6;
   }
 
-  pre code {
-    @apply bg-transparent p-0;
-    color: inherit;
+  /* highlight.js가 적용된 코드 블록 스타일 */
+  pre code.hljs {
+    @apply p-0;
+    font-size: 0.875rem;
+  }
+
+  /* highlight.js가 적용되지 않은 코드 블록 (fallback) */
+  pre code:not(.hljs) {
+    @apply bg-[var(--color-text-primary)] text-[#E5E8EB] p-0;
     font-size: 0.875rem;
   }
 
@@ -175,6 +181,16 @@ html.dark {
   --color-hover: #26262F;
 }
 
+/* 다크 모드에서 코드 블록 배경색 오버라이드 */
+html.dark pre code.hljs {
+  background: #1E1E23 !important;
+  color: #E5E8EB;
+}
+
+html.dark pre {
+  background: #1E1E23 !important;
+}
+
 /* 시스템 다크 모드 설정 (사용자 설정이 없을 때만 적용) */
 @media (prefers-color-scheme: dark) {
   :root:not(.light):not(.dark) {
@@ -186,6 +202,16 @@ html.dark {
     --color-background-secondary: #1E1E23;
     --color-border: #2C2C35;
     --color-hover: #26262F;
+  }
+
+  /* 시스템 다크 모드에서 코드 블록 배경색 오버라이드 */
+  :root:not(.light):not(.dark) pre code.hljs {
+    background: #1E1E23 !important;
+    color: #E5E8EB;
+  }
+
+  :root:not(.light):not(.dark) pre {
+    background: #1E1E23 !important;
   }
 }
 

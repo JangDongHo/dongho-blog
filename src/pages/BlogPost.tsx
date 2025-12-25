@@ -1,6 +1,8 @@
+import 'highlight.js/styles/github.css'
 import 'katex/dist/katex.min.css'
 import ReactMarkdown from 'react-markdown'
 import { useParams } from 'react-router-dom'
+import rehypeHighlight from 'rehype-highlight'
 import rehypeKatex from 'rehype-katex'
 import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
@@ -31,7 +33,7 @@ function BlogPost() {
         <div className="post-body leading-[1.8] text-text-primary text-[1.1rem]">
           <ReactMarkdown
             remarkPlugins={[remarkGfm, remarkMath]}
-            rehypePlugins={[rehypeKatex]}
+            rehypePlugins={[rehypeHighlight, rehypeKatex]}
             components={{
               h2: ({ children }) => <h2 className="mt-12 mb-4 text-[1.75rem] text-text-primary md:text-2xl md:mt-8">{children}</h2>,
               h3: ({ children }) => <h3 className="mt-8 mb-3 text-xl text-text-primary">{children}</h3>,
@@ -48,12 +50,12 @@ function BlogPost() {
                     </code>
                   )
                 }
-                // 코드 블록의 경우 pre에서 스타일링 (pre 안에 있으므로 흰색 텍스트)
-                return <code className="text-white text-sm font-mono" {...props}>{children}</code>
+                // 코드 블록의 경우 highlight.js가 스타일링을 담당
+                return <code className={className} {...props}>{children}</code>
               },
               pre: ({ children }: any) => {
                 return (
-                  <pre className="bg-black text-white p-6 rounded-xl overflow-x-auto my-8">
+                  <pre className="p-6 rounded-xl overflow-x-auto my-8 border border-border">
                     {children}
                   </pre>
                 )
