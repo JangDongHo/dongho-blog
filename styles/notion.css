@@ -53,6 +53,48 @@
   max-width: 1100px;
   margin: 0 auto;
   overflow-x: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Hide breadcrumb text and show GitHub avatar icon */
+.notion-header .notion-nav-header .breadcrumbs {
+  font-size: 0;
+  display: flex;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.notion-header .notion-nav-header .breadcrumbs:hover {
+  transform: scale(1.1);
+}
+
+.notion-header .notion-nav-header .breadcrumbs::before {
+  content: '';
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-image: url('https://avatars.githubusercontent.com/u/29221823?v=4');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: inline-block;
+  flex-shrink: 0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.notion-header .notion-nav-header .breadcrumbs:hover::before {
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Hide all text content inside breadcrumbs */
+.notion-header .notion-nav-header .breadcrumbs > * {
+  display: none;
 }
 
 .notion-nav-header-rhs {
