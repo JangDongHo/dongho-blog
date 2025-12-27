@@ -22,7 +22,13 @@
 }
 
 .index-page {
-  --notion-max-width: 900px;
+  --notion-max-width: 1200px;
+  padding-top: 40px;
+}
+
+.index-page .notion-page {
+  padding-top: 0;
+  padding-bottom: 60px;
 }
 
 .notion-text {
@@ -54,9 +60,19 @@
 }
 
 .notion-gallery-grid {
-  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-  grid-gap: 6vmin;
-  gap: 6vmin;
+  grid-template-columns: 1fr;
+  grid-gap: 24px;
+  gap: 24px;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+@media only screen and (max-width: 768px) {
+  .notion-gallery-grid {
+    padding: 0 16px;
+    gap: 16px;
+  }
 }
 
 .notion-gallery-grid .notion-page-icon-inline {
@@ -64,8 +80,16 @@
 }
 
 .notion-gallery-grid .notion-page-title-text {
-  font-size: 2em;
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.6;
   white-space: unset;
+  margin-bottom: 12px;
+  color: var(--fg-color);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .notion-gallery-grid .notion-collection-card-property {
@@ -75,38 +99,87 @@
 
 .notion-gallery-grid .notion-property-text {
   font-size: 14px;
+  color: var(--fg-color-2);
+  line-height: 1.5;
 }
 
 .notion-collection-card {
-  border-radius: 16px;
-  box-shadow: none;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  background: var(--bg-color);
+  transition: all 0.2s ease;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.notion-collection-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  transform: translateY(-1px);
+}
+
+.notion-collection-card-cover {
+  border-radius: 8px 8px 0 0;
+  border-bottom: 0 none;
+  transition: all 0.2s ease;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  background: #1e293b;
+  position: relative;
 }
 
 .notion-collection-card-cover img {
-  border-radius: 16px;
-}
-
-.notion-collection-card {
-  overflow: visible;
-}
-
-.notion-collection-card-cover {
-  border-radius: 16px;
-  box-shadow: 2px 2px 8px 4px rgba(15, 15, 15, 0.1);
-}
-
-.notion-collection-card-cover {
-  border-bottom: 0 none;
-  transition: filter 150ms linear;
-  filter: none;
+  border-radius: 8px 8px 0 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .notion-collection-card:hover .notion-collection-card-cover {
-  filter: brightness(120%);
+  filter: brightness(1.05);
 }
 
 .notion-collection-card-body {
-  padding: 10px;
+  padding: 20px 24px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-color);
+}
+
+/* Title - First */
+.notion-collection-card-body .notion-page-title {
+  order: 1;
+  margin-bottom: 12px;
+}
+
+/* Description property - Second (text properties that are not dates) */
+.notion-collection-card-body .notion-collection-card-property {
+  order: 2;
+  margin-top: 0;
+  margin-bottom: 12px;
+  padding-top: 0;
+  padding-bottom: 12px;
+  border-top: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  font-size: 14px;
+  color: var(--fg-color-2);
+  line-height: 1.6;
+}
+
+/* Date property - Third (last property) */
+.notion-collection-card-body .notion-collection-card-property:last-child {
+  order: 3;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+  font-size: 13px;
+}
+
+.dark-mode .notion-collection-card-body .notion-collection-card-property {
+  border-bottom-color: rgba(255, 255, 255, 0.1);
 }
 
 /* only target safari */
@@ -402,4 +475,37 @@
 
 .notion-equation.notion-equation-block{
   align-items: center;
+}
+
+.index-page .notion-collection-view-page {
+  padding: 0;
+}
+
+.index-page .notion-collection-view-page > div {
+  max-width: 100%;
+}
+
+/* Improve card link styling */
+.notion-collection-card a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.notion-collection-card a:hover {
+  text-decoration: none;
+}
+
+.index-page .notion-collection {
+  max-width: 100%;
+  padding: 0;
+}
+
+.index-page .notion-collection-view {
+  padding: 0;
+}
+
+/* Better spacing for index page */
+.index-page .notion-gallery-view {
+  padding: 0;
+  margin: 0;
 }
