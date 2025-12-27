@@ -64,8 +64,10 @@
   grid-gap: 24px;
   gap: 24px;
   max-width: 800px;
-  margin: 0 auto;
+  margin: 0;
   padding: 0 24px;
+  justify-items: start;
+  border-top: none !important;
 }
 
 @media only screen and (max-width: 768px) {
@@ -103,6 +105,7 @@
   line-height: 1.5;
 }
 
+/* Horizontal layout: text left, icon right */
 .notion-collection-card {
   border-radius: 8px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
@@ -111,8 +114,10 @@
   transition: all 0.2s ease;
   border: none;
   display: flex;
-  flex-direction: column;
-  height: 100%;
+  flex-direction: row;
+  height: auto;
+  width: 100%;
+  max-width: 800px;
 }
 
 .notion-collection-card:hover {
@@ -120,18 +125,28 @@
   transform: translateY(-1px);
 }
 
+/* Icon/Image on the right */
 .notion-collection-card-cover {
-  border-radius: 8px 8px 0 0;
-  border-bottom: 0 none;
+  order: 2;
+  border-radius: 0 8px 8px 0;
+  border-left: 1px solid rgba(0, 0, 0, 0.06);
+  border-top: none;
+  border-bottom: none;
+  border-right: none;
   transition: all 0.2s ease;
   overflow: hidden;
-  aspect-ratio: 16 / 9;
+  width: 160px;
+  min-width: 160px;
+  flex-shrink: 0;
   background: #1e293b;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .notion-collection-card-cover img {
-  border-radius: 8px 8px 0 0;
+  border-radius: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -141,45 +156,94 @@
   filter: brightness(1.05);
 }
 
+.dark-mode .notion-collection-card-cover {
+  border-left-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Text content on the left */
 .notion-collection-card-body {
-  padding: 20px 24px;
+  order: 1;
+  padding: 20px;
   flex: 1;
   display: flex;
   flex-direction: column;
   background: var(--bg-color);
+  justify-content: space-between;
 }
 
 /* Title - First */
 .notion-collection-card-body .notion-page-title {
   order: 1;
   margin-bottom: 12px;
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.5;
 }
 
-/* Description property - Second (text properties that are not dates) */
-.notion-collection-card-body .notion-collection-card-property {
+/* Description property - Second */
+.notion-collection-card-body .notion-collection-card-property:not(:last-child) {
   order: 2;
   margin-top: 0;
-  margin-bottom: 12px;
+  margin-bottom: auto;
   padding-top: 0;
-  padding-bottom: 12px;
+  padding-bottom: 0;
   border-top: none;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  border-bottom: none;
   font-size: 14px;
   color: var(--fg-color-2);
   line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 /* Date property - Third (last property) */
 .notion-collection-card-body .notion-collection-card-property:last-child {
   order: 3;
+  margin-top: 16px;
   margin-bottom: 0;
+  padding-top: 0;
   padding-bottom: 0;
+  border-top: none;
   border-bottom: none;
   font-size: 13px;
+  color: var(--fg-color-2);
 }
 
 .dark-mode .notion-collection-card-body .notion-collection-card-property {
   border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Mobile: revert to vertical layout */
+@media only screen and (max-width: 768px) {
+  .notion-collection-card {
+    flex-direction: column;
+    min-height: auto;
+  }
+
+  .notion-collection-card-body {
+    order: 2;
+  }
+
+  .notion-collection-card-cover {
+    order: 1;
+    border-radius: 8px 8px 0 0;
+    border-left: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    width: 100%;
+    min-width: auto;
+    aspect-ratio: 16 / 9;
+  }
+
+  .notion-collection-card-cover img {
+    border-radius: 8px 8px 0 0;
+  }
+
+  .dark-mode .notion-collection-card-cover {
+    border-left: none;
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+  }
 }
 
 /* only target safari */
@@ -241,7 +305,12 @@
 
 .notion-title {
   display: block;
-  text-align: center;
+  text-align: left;
+}
+
+/* Hide title on index page */
+.index-page .notion-title {
+  display: none;
 }
 
 .notion-collection-row {
@@ -254,12 +323,13 @@
 
 .notion-collection-row-property .notion-property {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .notion-collection-row-value {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   padding: 0;
   min-height: 23px;
 }
@@ -420,14 +490,27 @@
   background: none !important;
 }
 
-/* if you don't want rounded page icon images, remove this */
-.notion-page-icon-hero.notion-page-icon-image {
-  border-radius: 50%;
-  box-shadow: 0 8px 40px 0 rgb(0 0 0 / 21%);
+/* Hide page icon hero completely - no space taken */
+.notion-page-icon-hero,
+.notion-page-icon-hero * {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
 }
-.notion-page-icon-hero.notion-page-icon-image span,
-.notion-page-icon-hero.notion-page-icon-image img {
-  border-radius: 50%;
+
+/* Remove top padding/margin when page has icon */
+.notion-page-has-icon.notion-page {
+  padding-top: 0 !important;
+}
+
+.notion-page-has-icon .notion-page-icon-hero {
+  margin: 0 !important;
+  padding: 0 !important;
+  height: 0 !important;
 }
 
 .notion-header {
