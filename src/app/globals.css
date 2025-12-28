@@ -1,0 +1,231 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #3182F6;
+  --color-text-primary: #191F28;
+  --color-text-secondary: #4E5968;
+  --color-text-tertiary: #8B95A1;
+  --color-background: #FFFFFF;
+  --color-background-secondary: #F9FAFB;
+  --color-border: #E5E8EB;
+  --color-hover: #F2F4F6;
+  
+  --font-family-base: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Roboto', 'Noto Sans KR', 'Segoe UI', 'Malgun Gothic', sans-serif;
+}
+
+@layer base {
+  * {
+    @apply m-0 p-0 box-border;
+  }
+
+  body {
+    @apply m-0 min-h-screen;
+    font-family: var(--font-family-base);
+    line-height: 1.6;
+    font-weight: 400;
+    color: var(--color-text-primary);
+    background-color: var(--color-background);
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  a {
+    @apply text-[var(--color-text-primary)] no-underline transition-colors duration-200;
+  }
+
+  a:hover {
+    @apply text-[var(--color-primary)];
+  }
+
+  h1 {
+    @apply text-[2.5em] leading-[1.3] mb-4 font-bold tracking-[-0.02em];
+  }
+
+  h2 {
+    @apply text-[2em] leading-[1.4] mb-[0.8rem] font-bold tracking-[-0.02em];
+  }
+
+  .post-body h2 {
+    @apply mt-12 mb-4 text-[1.75rem] text-[var(--color-text-primary)] md:text-2xl md:mt-8;
+  }
+
+  /* 모바일에서는 이미지 100%, 데스크톱에서는 설정된 width 사용 */
+  .post-body .post-image {
+    width: 100% !important;
+    max-width: 100%;
+  }
+
+  @media (min-width: 768px) {
+    .post-body .post-image {
+      width: var(--image-width, 100%) !important;
+    }
+  }
+
+  h3 {
+    @apply text-[1.5em] leading-[1.4] mb-[0.6rem] font-bold tracking-[-0.01em];
+  }
+
+  p {
+    @apply mb-4 leading-[1.7];
+  }
+
+  hr {
+    @apply my-8 border-0 border-t border-border;
+  }
+
+  button {
+    @apply rounded-lg border border-[var(--color-border)] px-5 py-2.5 text-base font-semibold cursor-pointer transition-all duration-200;
+    font-family: inherit;
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+  }
+
+  button:hover {
+    background-color: var(--color-hover);
+    border-color: var(--color-text-tertiary);
+  }
+
+  button:focus,
+  button:focus-visible {
+    @apply outline-2 outline-[var(--color-primary)] outline-offset-2;
+  }
+
+  code {
+    @apply bg-[var(--color-background-secondary)] px-2 py-1 rounded;
+    font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+    font-size: 0.875em;
+    color: var(--color-primary);
+  }
+
+  pre {
+    @apply p-6 rounded-xl overflow-x-auto my-8 border border-border;
+    line-height: 1.6;
+  }
+
+  /* highlight.js가 적용된 코드 블록 스타일 */
+  pre code.hljs {
+    @apply p-0;
+    font-size: 0.875rem;
+  }
+
+  /* highlight.js가 적용되지 않은 코드 블록 (fallback) */
+  pre code:not(.hljs) {
+    @apply bg-[var(--color-text-primary)] text-[#E5E8EB] p-0;
+    font-size: 0.875rem;
+  }
+
+  /* 표 스타일 */
+  table {
+    @apply w-full border-collapse my-8;
+    border-spacing: 0;
+  }
+
+  thead {
+    @apply bg-[var(--color-background-secondary)];
+  }
+
+  th {
+    @apply px-4 py-3 text-left font-semibold text-[var(--color-text-primary)] border-b-2 border-[var(--color-primary)];
+    font-size: 0.95rem;
+  }
+
+  td {
+    @apply px-4 py-3 text-[var(--color-text-primary)] border-b border-[var(--color-border)];
+    font-size: 0.95rem;
+  }
+
+  tbody tr {
+    @apply transition-colors duration-200;
+  }
+
+  tbody tr:last-child td {
+    @apply border-b-0;
+  }
+}
+
+/* 게시글 카드 애니메이션 */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.post-card {
+  animation: fadeInUp 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+/* About 페이지 애니메이션 */
+.about-section {
+  animation: fadeInUp 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+.about-item {
+  animation: fadeInUp 0.5s ease-out forwards;
+  opacity: 0;
+}
+
+/* 다크 모드 스타일 - 사용자 설정이 우선 */
+html.dark {
+  --color-primary: #3182F6;
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #B0B8C1;
+  --color-text-tertiary: #6B7684;
+  --color-background: #17171C;
+  --color-background-secondary: #1E1E23;
+  --color-border: #2C2C35;
+  --color-hover: #26262F;
+}
+
+/* 다크 모드에서 코드 블록 배경색 오버라이드 */
+html.dark pre code.hljs {
+  background: #1E1E23 !important;
+  color: #E5E8EB;
+}
+
+html.dark pre {
+  background: #1E1E23 !important;
+}
+
+/* 시스템 다크 모드 설정 (사용자 설정이 없을 때만 적용) */
+@media (prefers-color-scheme: dark) {
+  :root:not(.light):not(.dark) {
+    --color-primary: #3182F6;
+    --color-text-primary: #FFFFFF;
+    --color-text-secondary: #B0B8C1;
+    --color-text-tertiary: #6B7684;
+    --color-background: #17171C;
+    --color-background-secondary: #1E1E23;
+    --color-border: #2C2C35;
+    --color-hover: #26262F;
+  }
+
+  /* 시스템 다크 모드에서 코드 블록 배경색 오버라이드 */
+  :root:not(.light):not(.dark) pre code.hljs {
+    background: #1E1E23 !important;
+    color: #E5E8EB;
+  }
+
+  :root:not(.light):not(.dark) pre {
+    background: #1E1E23 !important;
+  }
+}
+
+/* Notion 콘텐츠 좌측 정렬 */
+.notion-page {
+  font-family: var(--font-family-base) !important;
+  text-align: left !important;
+  margin-left: 0 !important;
+  margin-right: auto !important;
+  max-width: 100% !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}

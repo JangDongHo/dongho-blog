@@ -1,22 +1,25 @@
-import { Link, useLocation } from 'react-router-dom'
-import { GITHUB_USERNAME } from '../config/constants'
-import { useTheme } from '../contexts/ThemeContext'
+'use client'
 
-function Header() {
+import { GITHUB_USERNAME } from '@/config/constants'
+import { useTheme } from '@/contexts/ThemeContext'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+
+export default function Header() {
   const { isDark, toggleTheme } = useTheme()
-  const location = useLocation()
+  const pathname = usePathname()
 
   const isActive = (path: string) => {
     if (path === '/') {
-      return location.pathname === '/' || location.pathname.startsWith('/posts/')
+      return pathname === '/' || pathname?.startsWith('/posts/')
     }
-    return location.pathname === path
+    return pathname === path
   }
 
   return (
     <header className="sticky top-0 z-100 bg-background border-b border-border">
       <div className="max-w-[1000px] mx-auto px-8 py-5 flex justify-between items-center md:px-4">
-        <Link to="/" className="text-inherit no-underline flex items-center">
+        <Link href="/" className="text-inherit no-underline flex items-center">
           <img
             src={`https://github.com/${GITHUB_USERNAME}.png`}
             alt="Profile"
@@ -30,7 +33,7 @@ function Header() {
         </Link>
         <nav className="flex items-center gap-4 md:gap-3">
           <Link
-            to="/"
+            href="/"
             className={`px-4 py-2 rounded-lg text-base font-semibold transition-all duration-200 ${
               isActive('/')
                 ? 'text-text-primary'
@@ -40,7 +43,7 @@ function Header() {
             Post
           </Link>
           <Link
-            to="/about"
+            href="/about"
             className={`px-4 py-2 rounded-lg text-base font-semibold transition-all duration-200 ${
               isActive('/about')
                 ? 'text-text-primary'
@@ -69,6 +72,3 @@ function Header() {
     </header>
   )
 }
-
-export default Header
-

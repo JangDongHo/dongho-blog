@@ -1,5 +1,7 @@
+'use client'
+
+import type { ThemeContextType } from '@/types'
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react'
-import type { ThemeContextType } from '../types'
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
@@ -51,4 +53,3 @@ export function useTheme(): ThemeContextType {
   }
   return context
 }
-

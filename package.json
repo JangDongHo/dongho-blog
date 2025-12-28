@@ -1,39 +1,36 @@
 {
   "name": "dongho-blog",
-  "private": true,
   "version": "0.0.1",
-  "type": "module",
+  "private": true,
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "lint": "eslint ."
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
-    "@tailwindcss/vite": "^4.1.17",
+    "@notionhq/client": "^5.6.0",
     "katex": "^0.16.11",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "highlight.js": "^11.10.0",
+    "next": "^15.1.6",
+    "notion-client": "^7.7.3",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "react-markdown": "^10.1.0",
-    "react-router-dom": "^6.28.0",
+    "react-notion-x": "^7.7.3",
     "rehype-highlight": "^7.0.0",
     "rehype-katex": "^7.0.1",
     "remark-gfm": "^4.0.1",
-    "remark-math": "^6.0.0",
-    "tailwindcss": "^4.1.17"
+    "remark-math": "^6.0.0"
   },
   "devDependencies": {
-    "@eslint/js": "^9.13.0",
-    "@types/react": "^18.3.12",
-    "@types/react-dom": "^18.3.1",
-    "@vitejs/plugin-react": "^4.3.3",
+    "@tailwindcss/postcss": "^4.1.17",
+    "@types/node": "^22.10.5",
+    "@types/react": "^19.0.6",
+    "@types/react-dom": "^19.0.2",
     "eslint": "^9.13.0",
-    "eslint-plugin-react": "^7.37.2",
-    "eslint-plugin-react-hooks": "^5.0.0",
-    "eslint-plugin-react-refresh": "^0.4.14",
-    "globals": "^15.11.0",
-    "typescript": "^5.6.3",
-    "vite": "^5.4.10"
+    "eslint-config-next": "^15.1.6",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^4.1.17",
+    "typescript": "^5.7.2"
   }
 }
