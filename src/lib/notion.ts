@@ -17,6 +17,7 @@ export function getNotionAPI() {
 }
 
 // Notion 페이지의 속성을 Post 타입으로 변환
+ 
 export function notionPageToBlogPost(page: any): BlogPost | null {
   try {
     const properties = page.properties
@@ -38,7 +39,8 @@ export function notionPageToBlogPost(page: any): BlogPost | null {
   }
 }
 
-function notionPageToPost(page: any, recordMap: object): Post | null {
+ 
+function notionPageToPost(page: any, recordMap: any): Post | null {
   try {
     const properties = page.properties
     const title = properties['이름']?.title?.[0]?.plain_text || '제목 없음'
@@ -68,6 +70,7 @@ export async function getNotionPosts(): Promise<BlogPost[]> {
 
   try {
     // 1. 데이터베이스 정보 가져오기 (data_sources 확인)
+     
     const database = await notion.databases.retrieve({
       database_id: databaseId
     }) as any
@@ -115,7 +118,8 @@ export async function getNotionPosts(): Promise<BlogPost[]> {
 }
 
 // 페이지의 블록 콘텐츠 가져오기
-async function getPageContent(pageId: string): Promise<object> {
+ 
+async function getPageContent(pageId: string): Promise<any> {
   const notion = getNotionAPI()
   const recordMap = await notion.getPage(pageId);
 

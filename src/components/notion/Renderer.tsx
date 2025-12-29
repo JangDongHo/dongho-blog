@@ -4,7 +4,7 @@ import { useTheme } from '@/contexts/ThemeContext';
 import { NotionRenderer } from "react-notion-x";
  
 interface RendererProps {
-  recordMap: any; // 임의로 any
+  recordMap: any;
 }
  
 export const Renderer = ({ recordMap }: RendererProps) => {

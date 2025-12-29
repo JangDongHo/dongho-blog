@@ -3,7 +3,8 @@ export interface Post {
   id: string // 제목 기반 slug (공백은 하이픈으로 변환)
   title: string
   date: string
-  recordMap: object
+   
+  recordMap: any
 }
 
 // 테마 컨텍스트 타입 정의
