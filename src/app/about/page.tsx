@@ -1,6 +1,5 @@
 import Image from '@/components/Image'
-
-const HEADER_MAX_WIDTH = 'max-w-[1000px]'
+import { HEADER_MAX_WIDTH } from '@/config/layout'
 
 interface Experience {
   category: string
@@ -148,10 +147,7 @@ export default function About() {
           {experiences.map((experience, sectionIndex) => (
             <section 
               key={experience.category} 
-              className="pb-8 border-b border-border last:border-b-0 about-section"
-              style={{
-                animationDelay: `${sectionIndex * 0.1}s`
-              }}
+              className="pb-8 border-b border-border last:border-b-0"
             >
               <h2 className="text-2xl font-bold text-text-primary mb-8 pb-2 border-b-2 border-primary inline-block">
                 {experience.category}
@@ -160,10 +156,7 @@ export default function About() {
                 {experience.items.map((item, index) => (
                   <div 
                     key={index} 
-                    className="relative pl-6 border-l-2 border-border about-item"
-                    style={{
-                      animationDelay: `${(sectionIndex * 0.1) + ((index + 1) * 0.05)}s`
-                    }}
+                    className="relative pl-6 border-l-2 border-border"
                   >
                     <div className="absolute -left-2 top-0 w-4 h-4 rounded-full bg-background border-2 border-primary"></div>
                     <div className="flex flex-col md:flex-row md:items-start md:gap-4">

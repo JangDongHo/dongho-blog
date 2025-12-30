@@ -1,5 +1,4 @@
 import { Renderer } from '@/components/notion/Renderer'
-import { CONTENT_MAX_WIDTH } from '@/config/layout'
 import { getNotionPostById, getNotionPosts } from '@/lib/notion'
 import { formatDateToKorean } from '@/utils/date'
 import "katex/dist/katex.min.css"
@@ -39,7 +38,7 @@ export default async function BlogPostPage({ params }: PageProps) {
   }
 
   return (
-    <div className={`${CONTENT_MAX_WIDTH} mx-auto py-12 px-8 bg-background md:py-8 md:px-4`}>
+    <div className={`mx-auto py-12 px-8 bg-background md:py-8 md:px-4`}>
       <article className="bg-background p-0">
         <header className="mb-12 pb-8 border-b border-border">
           <div className="flex items-center gap-2 mb-6 text-sm">

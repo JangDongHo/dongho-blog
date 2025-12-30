@@ -1,6 +1,7 @@
 'use client'
 
 import { GITHUB_USERNAME } from '@/config/constants'
+import { HEADER_MAX_WIDTH } from '@/config/layout'
 import { useTheme } from '@/contexts/ThemeContext'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -17,8 +18,8 @@ export default function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-100 bg-background border-b border-border">
-      <div className="max-w-[1000px] mx-auto px-8 py-5 flex justify-between items-center md:px-4">
+    <header className="sticky top-0 z-100 bg-background">
+      <div className={`${HEADER_MAX_WIDTH} mx-auto px-8 py-5 flex justify-between items-center md:px-4`}>
         <Link href="/" className="text-inherit no-underline flex items-center">
           <img
             src={`https://github.com/${GITHUB_USERNAME}.png`}

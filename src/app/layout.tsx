@@ -2,6 +2,7 @@ import '@/app/globals.css'
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
 import { GITHUB_USERNAME } from '@/config/constants'
+import { CONTENT_MAX_WIDTH } from '@/config/layout'
 import { ThemeProvider } from '@/contexts/ThemeContext'
 import type { Metadata } from 'next'
 
@@ -25,7 +26,7 @@ export default function RootLayout({
         <ThemeProvider>
           <div className="flex flex-col min-h-screen bg-background">
             <Header />
-            <main className="flex-1 max-w-[1000px] w-full mx-auto p-0 bg-background">
+            <main className={`flex-1 ${CONTENT_MAX_WIDTH} w-full mx-auto p-0 bg-background`}>
               {children}
             </main>
             <Footer />

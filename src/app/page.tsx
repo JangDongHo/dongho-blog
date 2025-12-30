@@ -1,8 +1,10 @@
 import PostsList from '@/components/PostsList'
+import { GITHUB_USERNAME } from '@/config/constants'
+import { HEADER_MAX_WIDTH } from '@/config/layout'
 import { getNotionPosts } from '@/lib/notion'
 import type { BlogPost } from '@/types'
-
-const HEADER_MAX_WIDTH = 'max-w-[1000px]'
+import Link from 'next/link'
+import { FaGithub } from 'react-icons/fa'
 
 // ISR 설정: 1시간마다 재검증
 // 첫 방문자가 페이지를 요청하면 서버에서 Notion API를 호출하고 캐싱
@@ -24,14 +26,23 @@ export default async function Home() {
 
   return (
     <div className="p-0 bg-background">
-      <header className="bg-background pt-12 px-8 pb-8 mb-8 border-b border-border md:pt-8 md:px-4 md:pb-6">
-        <h1 className={`mb-2 ${HEADER_MAX_WIDTH} mx-auto`}>장동호</h1>
-        <p className={`text-text-secondary text-lg ${HEADER_MAX_WIDTH} mx-auto md:text-base`}>
-          Slow and steady, with pleasure.
-        </p>
+      <header className="bg-background md:pt-4 md:px-4 md:pb-6">
+        <h1 className={`mb-2 text-3xl font-bold ${HEADER_MAX_WIDTH} mx-auto text-center flex items-center justify-center gap-4 border-b border-border pb-8`}>
+          백엔드 개발자 장동호입니다
+          <Link 
+            href={`https://github.com/${GITHUB_USERNAME}`}
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="inline-flex items-center hover:text-gray-500 transition-colors"
+            aria-label="GitHub 프로필"
+          >
+            <FaGithub className="w-6 h-6" />
+          </Link>
+        </h1>
       </header>
 
-      <div className={`${HEADER_MAX_WIDTH} mx-auto px-8 pb-16 bg-background md:px-4 md:pb-12`}>
+      <div className={`mx-auto px-8 pb-16 bg-background md:px-4 md:pb-12`}>
+        <h1 className="text-3xl font-bold mb-8">최근 포스트</h1>
         <PostsList posts={posts} />
       </div>
     </div>
