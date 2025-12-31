@@ -1,5 +1,7 @@
+import { REVALIDATE_TIME } from '@/config/constants';
 import type { BlogPost, Post } from '@/types';
 import { Client } from '@notionhq/client';
+import { unstable_cache } from 'next/cache';
 import { NotionAPI } from 'notion-client';
 
 // Notion 클라이언트 초기화
@@ -20,13 +22,13 @@ export function getNotionAPI() {
  
 export function notionPageToBlogPost(page: any): BlogPost | null {
   try {
-    const properties = page.properties
+    const properties = page.properties;
 
     // 제목 추출
-    const title = properties['이름'].title[0].plain_text
+    const title = properties['이름'].title[0].plain_text;
 
     // 날짜 추출
-    const date = properties['생성일'].date.start
+    const date = properties['생성일'].date?.start;
 
     return {
       id: page.id,
@@ -58,8 +60,8 @@ function notionPageToPost(page: any, recordMap: any): Post | null {
   }
 }
 
-// Notion 데이터베이스에서 모든 포스트 가져오기
-export async function getNotionPosts(): Promise<BlogPost[]> {
+// Notion 데이터베이스에서 모든 포스트 가져오기 (내부 함수)
+async function _getNotionPosts(): Promise<BlogPost[]> {
   const databaseId = process.env.NOTION_DATABASE_ID
   if (!databaseId) {
     throw new Error('NOTION_DATABASE_ID 환경 변수가 설정되지 않았습니다.')
@@ -117,8 +119,30 @@ export async function getNotionPosts(): Promise<BlogPost[]> {
   }
 }
 
+// 캐싱된 Notion 포스트 목록 가져오기
+export const getNotionPosts = unstable_cache(
+  _getNotionPosts,
+  ['notion-posts'],
+  {
+    revalidate: REVALIDATE_TIME,
+    tags: ['notion-posts'],
+  }
+)
+
+// 캐싱된 Notion 포스트 가져오기 (id별로 캐싱)
+export async function getNotionPostById(pageId: string): Promise<Post | null> {
+  const cachedFn = unstable_cache(
+    async () => _getNotionPostById(pageId),
+    ['notion-post', pageId],
+    {
+      revalidate: REVALIDATE_TIME,
+      tags: ['notion-post', `notion-post-${pageId}`],
+    }
+  )
+  return cachedFn()
+}
+
 // 페이지의 블록 콘텐츠 가져오기
- 
 async function getPageContent(pageId: string): Promise<any> {
   const notion = getNotionAPI()
   const recordMap = await notion.getPage(pageId);
@@ -127,7 +151,7 @@ async function getPageContent(pageId: string): Promise<any> {
 }
 
 // Notion 페이지 ID로 특정 포스트 가져오기
-export async function getNotionPostById(pageId: string): Promise<Post | null> {
+async function _getNotionPostById(pageId: string): Promise<Post | null> {
   const notion = getNotionClient()
 
   try {

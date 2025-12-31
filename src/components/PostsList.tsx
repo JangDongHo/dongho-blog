@@ -33,7 +33,7 @@ export default function PostsList({ posts }: PostsListProps) {
                 </span>
               </div>
               <span className="text-sm text-text-tertiary whitespace-nowrap self-center">
-                {formatDateToKorean(post.date)}
+                {post.date ? formatDateToKorean(post.date) : ''}
               </span>
             </article>
           </li>

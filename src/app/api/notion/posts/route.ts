@@ -1,9 +1,6 @@
 import { getNotionPosts } from '@/lib/notion'
 import { NextResponse } from 'next/server'
 
-// 캐시 설정: 60초마다 재검증 (ISR)
-export const revalidate = 60
-
 export async function GET() {
   try {
     const posts = await getNotionPosts()

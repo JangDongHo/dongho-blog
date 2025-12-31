@@ -6,12 +6,6 @@ import type { BlogPost } from '@/types'
 import Link from 'next/link'
 import { FaGithub } from 'react-icons/fa'
 
-// ISR 설정: 1시간마다 재검증
-// 첫 방문자가 페이지를 요청하면 서버에서 Notion API를 호출하고 캐싱
-// 이후 1시간 동안은 캐싱된 페이지를 반환하여 API 호출을 방지
-// 1시간 후 다음 요청 시 백그라운드에서 자동으로 재검증하여 최신 데이터로 갱신
-export const revalidate = 3600
-
 export default async function Home() {
   let posts: BlogPost[] = []
   

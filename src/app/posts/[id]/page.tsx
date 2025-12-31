@@ -24,11 +24,6 @@ export async function generateStaticParams() {
   }
 }
 
-// ISR 설정: 1시간마다 재검증
-// 빌드 시 생성된 페이지가 1시간 후 다음 요청 시 백그라운드에서 자동으로 재검증
-// 새 포스트가 추가되면 1시간 내에 자동으로 반영됨
-export const revalidate = 3600
-
 export default async function BlogPostPage({ params }: PageProps) {
   const { id } = await params;
   const post = await getNotionPostById(id);
@@ -42,7 +37,7 @@ export default async function BlogPostPage({ params }: PageProps) {
       <article className="bg-background p-0">
         <header className="mb-12 pb-8 border-b border-border">
           <div className="flex items-center gap-2 mb-6 text-sm">
-            <span className="text-text-tertiary">{formatDateToKorean(post.date)}</span>
+            <span className="text-text-tertiary">{post.date ? formatDateToKorean(post.date) : ''}</span>
           </div>
           <h1 className="m-0 text-[2.5rem] leading-[1.3] tracking-[-0.02em] text-text-primary md:text-[2rem]">{post.title}</h1>
         </header>
