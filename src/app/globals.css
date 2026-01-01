@@ -204,3 +204,23 @@ html.dark pre {
   padding-left: 0 !important;
   padding-right: 0 !important;
 }
+
+/* Notion simple table border 색상 더 진하게 */
+.notion-simple-table {
+  border-color: var(--color-text-tertiary) !important;
+}
+
+.notion-simple-table th,
+.notion-simple-table td {
+  border-color: var(--color-text-tertiary) !important;
+}
+
+/* 다크 모드에서도 더 진한 border */
+html.dark .notion-simple-table {
+  border-color: #4E5968 !important;
+}
+
+html.dark .notion-simple-table th,
+html.dark .notion-simple-table td {
+  border-color: #4E5968 !important;
+}
