@@ -7,12 +7,6 @@ export interface Post {
   recordMap: any
 }
 
-// 테마 컨텍스트 타입 정의
-export interface ThemeContextType {
-  isDark: boolean
-  toggleTheme: () => void
-}
-
 // 블로그 목록용 게시글 타입
 export interface BlogPost {
   id: string // 제목 기반 slug

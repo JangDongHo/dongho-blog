@@ -3,7 +3,6 @@ import Footer from '@/components/Footer'
 import Header from '@/components/Header'
 import { GITHUB_USERNAME } from '@/config/constants'
 import { CONTENT_MAX_WIDTH } from '@/config/layout'
-import { ThemeProvider } from '@/contexts/ThemeContext'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -23,15 +22,13 @@ export default function RootLayout({
   return (
     <html lang="ko" suppressHydrationWarning>
       <body>
-        <ThemeProvider>
-          <div className="flex flex-col min-h-screen bg-background">
-            <Header />
-            <main className={`flex-1 ${CONTENT_MAX_WIDTH} w-full mx-auto p-0 bg-background`}>
-              {children}
-            </main>
-            <Footer />
-          </div>
-        </ThemeProvider>
+        <div className="flex flex-col min-h-screen bg-background">
+          <Header />
+          <main className={`flex-1 ${CONTENT_MAX_WIDTH} w-full mx-auto p-0 bg-background`}>
+            {children}
+          </main>
+          <Footer />
+        </div>
       </body>
     </html>
   )

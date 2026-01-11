@@ -1,6 +1,5 @@
 "use client";
 
-import { useTheme } from '@/contexts/ThemeContext';
 import dynamic from 'next/dynamic';
 import { NotionRenderer } from "react-notion-x";
 import { Equation } from "react-notion-x/build/third-party/equation";
@@ -81,13 +80,10 @@ const Code = dynamic(() =>
 )
 
 export const Renderer = ({ recordMap }: RendererProps) => {
-  const { isDark } = useTheme();
-  
   return (
       <NotionRenderer
         recordMap={recordMap}
         fullPage={false}
-        darkMode={isDark}
         components={{
           Code,
           Collection: () => null, // Collection을 숨기기 위한 빈 컴포넌트

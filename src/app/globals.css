@@ -148,52 +148,6 @@
 /* 게시글 카드 애니메이션 - 제거됨 */
 /* About 페이지 애니메이션 - 제거됨 */
 
-/* 다크 모드 스타일 - 사용자 설정이 우선 */
-html.dark {
-  --color-primary: #3182F6;
-  --color-text-primary: #FFFFFF;
-  --color-text-secondary: #B0B8C1;
-  --color-text-tertiary: #6B7684;
-  --color-background: #17171C;
-  --color-background-secondary: #1E1E23;
-  --color-border: #2C2C35;
-  --color-hover: #26262F;
-}
-
-/* 다크 모드에서 코드 블록 배경색 오버라이드 */
-html.dark pre code.hljs {
-  background: #1E1E23 !important;
-  color: #E5E8EB;
-}
-
-html.dark pre {
-  background: #1E1E23 !important;
-}
-
-/* 시스템 다크 모드 설정 (사용자 설정이 없을 때만 적용) */
-@media (prefers-color-scheme: dark) {
-  :root:not(.light):not(.dark) {
-    --color-primary: #3182F6;
-    --color-text-primary: #FFFFFF;
-    --color-text-secondary: #B0B8C1;
-    --color-text-tertiary: #6B7684;
-    --color-background: #17171C;
-    --color-background-secondary: #1E1E23;
-    --color-border: #2C2C35;
-    --color-hover: #26262F;
-  }
-
-  /* 시스템 다크 모드에서 코드 블록 배경색 오버라이드 */
-  :root:not(.light):not(.dark) pre code.hljs {
-    background: #1E1E23 !important;
-    color: #E5E8EB;
-  }
-
-  :root:not(.light):not(.dark) pre {
-    background: #1E1E23 !important;
-  }
-}
-
 /* Notion 콘텐츠 좌측 정렬 */
 .notion-page {
   font-family: var(--font-family-base) !important;
@@ -213,14 +167,4 @@ html.dark pre {
 .notion-simple-table th,
 .notion-simple-table td {
   border-color: var(--color-text-tertiary) !important;
-}
-
-/* 다크 모드에서도 더 진한 border */
-html.dark .notion-simple-table {
-  border-color: #4E5968 !important;
-}
-
-html.dark .notion-simple-table th,
-html.dark .notion-simple-table td {
-  border-color: #4E5968 !important;
 }
