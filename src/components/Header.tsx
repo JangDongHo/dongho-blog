@@ -33,7 +33,7 @@ export default function Header() {
         <nav className="flex items-center gap-4 md:gap-3">
           <Link
             href="/"
-            className={`px-4 py-2 rounded-lg text-base font-semibold transition-all duration-200 ${
+            className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 md:text-base ${
               isActive('/')
                 ? 'text-text-primary'
                 : 'text-text-secondary'
@@ -43,7 +43,7 @@ export default function Header() {
           </Link>
           <Link
             href="/about"
-            className={`px-4 py-2 rounded-lg text-base font-semibold transition-all duration-200 ${
+            className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 md:text-base ${
               isActive('/about')
                 ? 'text-text-primary'
                 : 'text-text-secondary'

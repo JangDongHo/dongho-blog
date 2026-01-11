@@ -24,17 +24,17 @@ export default function PostsList({ posts }: PostsListProps) {
           >
             <article 
               onClick={() => router.push(`/posts/${post.id}`)}
-              className="flex items-start justify-between gap-4 py-1 px-2 rounded cursor-pointer hover:bg-hover hover:text-primary transition-colors"
+              className="flex gap-2 py-1 px-2 rounded cursor-pointer hover:bg-hover hover:text-primary transition-colors md:items-start md:justify-between md:gap-4 select-none"
             >
-              <div className="flex items-start gap-2 flex-1">
-                <span className="self-center text-lg">📄</span>
-                <span className="text-lg font-medium text-text-primary leading-tight">
+              <span className="self-start text-base md:text-lg md:self-center">📄</span>
+              <div className="flex flex-col gap-2 flex-1 md:flex-row md:items-start md:justify-between md:gap-4">
+                <span className="text-base font-medium text-text-primary leading-tight md:text-lg">
                   {post.title}
                 </span>
+                <span className="text-xs text-text-tertiary md:text-sm md:whitespace-nowrap md:self-center">
+                  {post.date ? formatDateToKorean(post.date) : ''}
+                </span>
               </div>
-              <span className="text-sm text-text-tertiary whitespace-nowrap self-center">
-                {post.date ? formatDateToKorean(post.date) : ''}
-              </span>
             </article>
           </li>
         ))

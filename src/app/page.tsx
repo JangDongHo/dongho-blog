@@ -20,8 +20,8 @@ export default async function Home() {
 
   return (
     <div className="p-0 bg-background">
-      <header className="bg-background md:pt-4 md:px-4 md:pb-6">
-        <h1 className={`mb-2 text-3xl font-bold ${HEADER_MAX_WIDTH} mx-auto text-center flex items-center justify-center gap-4 border-b border-border pb-8`}>
+      <header className="bg-background md:pt-4 md:px-4 md:pb-6 select-none">
+        <h1 className={`mb-2 text-2xl font-bold md:text-3xl ${HEADER_MAX_WIDTH} mx-auto text-center flex items-center justify-center gap-4 border-b border-border pb-8`}>
           백엔드 개발자 장동호입니다
           <Link 
             href={`https://github.com/${GITHUB_USERNAME}`}
@@ -30,13 +30,13 @@ export default async function Home() {
             className="inline-flex items-center hover:text-gray-500 transition-colors"
             aria-label="GitHub 프로필"
           >
-            <FaGithub className="w-6 h-6" />
+            <FaGithub className="w-5 h-5 md:w-6 md:h-6" />
           </Link>
         </h1>
       </header>
 
-      <div className={`mx-auto px-8 pb-16 bg-background md:px-4 md:pb-12`}>
-        <h1 className="text-3xl font-bold mb-8">최근 포스트</h1>
+      <div className={`mx-auto pt-4 px-8 bg-background`}>
+        <h1 className="text-xl font-bold mb-6 md:text-2xl select-none">최근 포스트</h1>
         <PostsList posts={posts} />
       </div>
     </div>

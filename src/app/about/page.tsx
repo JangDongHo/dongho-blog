@@ -149,7 +149,7 @@ export default function About() {
               key={experience.category} 
               className="pb-8 border-b border-border last:border-b-0"
             >
-              <h2 className="text-2xl font-bold text-text-primary mb-8 pb-2 border-b-2 border-primary inline-block">
+              <h2 className="text-xl font-bold text-text-primary mb-8 pb-2 border-b-2 border-primary inline-block md:text-2xl">
                 {experience.category}
               </h2>
               <div className="space-y-8 mt-6">
@@ -167,7 +167,7 @@ export default function About() {
                       </div>
                       <div className="flex-1 flex flex-col md:flex-row gap-4 items-start">
                         <div className="flex-1 w-full">
-                          <h3 className="text-lg font-semibold text-text-primary mb-2">
+                          <h3 className="text-base font-semibold text-text-primary mb-2 md:text-lg">
                             {item.title}
                           </h3>
                           {item.description && (
