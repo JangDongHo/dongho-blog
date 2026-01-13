@@ -1,6 +1,6 @@
-'use client'
+"use client";
 
-import Giscus from '@giscus/react'
+import Giscus from "@giscus/react";
 
 export default function Comments() {
   return (
@@ -16,10 +16,10 @@ export default function Comments() {
         reactionsEnabled="1"
         emitMetadata="0"
         inputPosition="bottom"
-        theme="preferred_color_scheme"
+        theme="light"
         lang="ko"
         loading="lazy"
       />
     </div>
-  )
+  );
 }
