@@ -1,4 +1,5 @@
 import { Renderer } from '@/components/notion/Renderer'
+import Comments from '@/components/Comments'
 import { getNotionPostById, getNotionPosts } from '@/lib/notion'
 import { formatDateToKorean } from '@/utils/date'
 import "katex/dist/katex.min.css"
@@ -42,6 +43,7 @@ export default async function BlogPostPage({ params }: PageProps) {
           <h1 className="m-0 text-[1.75rem] leading-[1.3] tracking-[-0.02em] text-text-primary md:text-[2.5rem]">{post.title}</h1>
         </header>
         <Renderer recordMap={post.recordMap} />
+        <Comments />
       </article>
     </div>
   )
