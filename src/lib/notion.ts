@@ -142,9 +142,91 @@ export async function getNotionPostById(pageId: string): Promise<Post | null> {
   return cachedFn()
 }
 
+// ---------------------------------------------------------------------------
+// Notion 요청 레이트 리미터
+// 공식 제한: 초당 평균 3개 (https://developers.notion.com/reference/request-limits)
+// next.config.ts에서 cpus: 1로 빌드 워커를 1개로 제한해야
+// 이 싱글턴이 전체 빌드에서 공유되어 제한이 올바르게 동작한다.
+// ---------------------------------------------------------------------------
+class NotionRateLimiter {
+  private readonly queue: Array<() => void> = []
+  private isProcessing = false
+  private lastRequestTime = 0
+  private readonly intervalMs: number
+
+  constructor(requestsPerSecond: number) {
+    this.intervalMs = Math.ceil(1000 / requestsPerSecond)
+  }
+
+  execute<T>(fn: () => Promise<T>): Promise<T> {
+    return new Promise<T>((resolve, reject) => {
+      this.queue.push(async () => {
+        try {
+          resolve(await fn())
+        } catch (err) {
+          reject(err)
+        }
+      })
+      this.pump()
+    })
+  }
+
+  private async pump() {
+    if (this.isProcessing) return
+    this.isProcessing = true
+
+    while (this.queue.length > 0) {
+      const wait = Math.max(0, this.intervalMs - (Date.now() - this.lastRequestTime))
+      if (wait > 0) await new Promise<void>((r) => setTimeout(r, wait))
+
+      const task = this.queue.shift()
+      if (task) {
+        this.lastRequestTime = Date.now()
+        await task()
+      }
+    }
+
+    this.isProcessing = false
+  }
+}
+
+// 2 req/s (500ms 간격): 공식 제한 3 req/s에 충분한 안전 마진
+const notionLimiter = new NotionRateLimiter(2)
+
+// 레이트 리미터 + 429 발생 시 Retry-After 헤더 기반 재시도
+async function notionFetch<T>(fn: () => Promise<T>, maxRetries = 4): Promise<T> {
+  return notionLimiter.execute(async () => {
+    for (let attempt = 0; attempt <= maxRetries; attempt++) {
+      try {
+        return await fn()
+      } catch (err: any) {
+        const is429 =
+          err?.status === 429 ||
+          err?.statusCode === 429 ||
+          String(err?.message).includes('429')
+
+        if (!is429 || attempt === maxRetries) throw err
+
+        const retryAfterSec = err?.headers?.['retry-after']
+        const waitMs = retryAfterSec
+          ? parseInt(retryAfterSec) * 1000
+          : 5000 * (attempt + 1)
+
+        console.warn(
+          `Notion 429 rate limited. ${waitMs}ms 후 재시도 (${attempt + 1}/${maxRetries})`
+        )
+        await new Promise<void>((r) => setTimeout(r, waitMs))
+      }
+    }
+    throw new Error('unreachable')
+  })
+}
+
+// ---------------------------------------------------------------------------
 // notion-client의 응답 구조를 react-notion-x가 기대하는 형태로 정규화
 // 최신 notion-client는 { spaceId, value: { value: {...}, role } } 형태로 반환하지만
 // react-notion-x는 { value: {...}, role } 형태를 기대함
+// ---------------------------------------------------------------------------
 function normalizeRecordMap(recordMap: any): any {
   const recordTypes = ['block', 'collection', 'collection_view', 'notion_user']
   const normalized = { ...recordMap }
@@ -190,11 +272,13 @@ function collectContentBlockIds(recordMap: any, rootPageId: string): string[] {
 // 페이지의 블록 콘텐츠 가져오기 (누락된 블록까지 모두 가져옴)
 async function getPageContent(pageId: string): Promise<any> {
   const notion = getNotionAPI()
-  const raw = await notion.getPage(pageId)
+
+  // getPage 내부에서도 여러 번 API 호출이 발생하므로 레이트 리미터 적용
+  const raw = await notionFetch(() => notion.getPage(pageId))
   const recordMap = normalizeRecordMap(raw)
 
   // notion-client의 fetchMissingBlocks 로직이 구조 변경으로 인해 제대로 작동하지 않으므로
-  // 정규화 이후 누락된 블록을 직접 배치로 가져옴
+  // 정규화 이후 누락된 블록을 배치로 순차 가져옴 (레이트 리미터 통과)
   const BATCH_SIZE = 100
   let iterations = 0
   const MAX_ITERATIONS = 5
@@ -205,20 +289,15 @@ async function getPageContent(pageId: string): Promise<any> {
 
     if (missingIds.length === 0) break
 
-    // 배치 단위로 병렬 요청
     const batches: string[][] = []
     for (let i = 0; i < missingIds.length; i += BATCH_SIZE) {
       batches.push(missingIds.slice(i, i + BATCH_SIZE))
     }
 
-    const results = await Promise.all(
-      batches.map((batch) =>
-        notion.getBlocks(batch).then((res) => res?.recordMap?.block || {})
-      )
-    )
-
     let fetchedCount = 0
-    for (const newBlocks of results) {
+    for (const batch of batches) {
+      const res = await notionFetch(() => notion.getBlocks(batch))
+      const newBlocks = res?.recordMap?.block || {}
       const normalized = normalizeRecordMap({ block: newBlocks }).block
       Object.assign(recordMap.block, normalized)
       fetchedCount += Object.keys(normalized).length
