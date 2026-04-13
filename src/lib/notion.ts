@@ -19,7 +19,7 @@ export function getNotionAPI() {
 }
 
 // Notion 페이지의 속성을 Post 타입으로 변환
- 
+
 export function notionPageToBlogPost(page: any): BlogPost | null {
   try {
     const properties = page.properties;
@@ -41,7 +41,7 @@ export function notionPageToBlogPost(page: any): BlogPost | null {
   }
 }
 
- 
+
 function notionPageToPost(page: any, recordMap: any): Post | null {
   try {
     const properties = page.properties
@@ -72,7 +72,7 @@ async function _getNotionPosts(): Promise<BlogPost[]> {
 
   try {
     // 1. 데이터베이스 정보 가져오기 (data_sources 확인)
-     
+
     const database = await notion.databases.retrieve({
       database_id: databaseId
     }) as any
@@ -238,10 +238,10 @@ async function _getNotionPostById(pageId: string): Promise<Post | null> {
   try {
     // 1. 페이지 properties 가져오기
     const page = await notion.pages.retrieve({ page_id: pageId })
-    
+
     // 2. 페이지 블록 콘텐츠 가져오기
     const recordMap = await getPageContent(pageId)
-    
+
     // 3. Post 객체로 변환
     return notionPageToPost(page, recordMap)
   } catch (error) {
