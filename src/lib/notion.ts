@@ -142,12 +142,93 @@ export async function getNotionPostById(pageId: string): Promise<Post | null> {
   return cachedFn()
 }
 
-// 페이지의 블록 콘텐츠 가져오기
+// notion-client의 응답 구조를 react-notion-x가 기대하는 형태로 정규화
+// 최신 notion-client는 { spaceId, value: { value: {...}, role } } 형태로 반환하지만
+// react-notion-x는 { value: {...}, role } 형태를 기대함
+function normalizeRecordMap(recordMap: any): any {
+  const recordTypes = ['block', 'collection', 'collection_view', 'notion_user']
+  const normalized = { ...recordMap }
+
+  for (const type of recordTypes) {
+    if (!normalized[type]) continue
+    const records: Record<string, any> = {}
+    for (const [id, record] of Object.entries<any>(normalized[type])) {
+      if (record?.value?.value !== undefined) {
+        records[id] = {
+          role: record.value.role,
+          value: record.value.value,
+        }
+      } else {
+        records[id] = record
+      }
+    }
+    normalized[type] = records
+  }
+
+  return normalized
+}
+
+// page/collection_view_page 타입이 아닌 블록들의 content ID만 수집
+// (서브페이지나 DB rows로 재귀적으로 빠지는 것을 방지)
+const PAGE_BLOCK_TYPES = new Set(['page', 'collection_view_page'])
+
+function collectContentBlockIds(recordMap: any, rootPageId: string): string[] {
+  const ids = new Set<string>()
+  for (const [id, block] of Object.entries<any>(recordMap.block || {})) {
+    const value = block?.value
+    if (!value) continue
+    // 루트 페이지 자신은 항상 포함, 나머지 page 타입은 content를 따라가지 않음
+    if (id !== rootPageId && PAGE_BLOCK_TYPES.has(value.type)) continue
+    const content: string[] = value.content || []
+    for (const contentId of content) {
+      ids.add(contentId)
+    }
+  }
+  return Array.from(ids)
+}
+
+// 페이지의 블록 콘텐츠 가져오기 (누락된 블록까지 모두 가져옴)
 async function getPageContent(pageId: string): Promise<any> {
   const notion = getNotionAPI()
-  const recordMap = await notion.getPage(pageId);
+  const raw = await notion.getPage(pageId)
+  const recordMap = normalizeRecordMap(raw)
 
-  return recordMap;
+  // notion-client의 fetchMissingBlocks 로직이 구조 변경으로 인해 제대로 작동하지 않으므로
+  // 정규화 이후 누락된 블록을 직접 배치로 가져옴
+  const BATCH_SIZE = 100
+  let iterations = 0
+  const MAX_ITERATIONS = 5
+
+  while (iterations < MAX_ITERATIONS) {
+    const allContentIds = collectContentBlockIds(recordMap, pageId)
+    const missingIds = allContentIds.filter((id) => !recordMap.block[id])
+
+    if (missingIds.length === 0) break
+
+    // 배치 단위로 병렬 요청
+    const batches: string[][] = []
+    for (let i = 0; i < missingIds.length; i += BATCH_SIZE) {
+      batches.push(missingIds.slice(i, i + BATCH_SIZE))
+    }
+
+    const results = await Promise.all(
+      batches.map((batch) =>
+        notion.getBlocks(batch).then((res) => res?.recordMap?.block || {})
+      )
+    )
+
+    let fetchedCount = 0
+    for (const newBlocks of results) {
+      const normalized = normalizeRecordMap({ block: newBlocks }).block
+      Object.assign(recordMap.block, normalized)
+      fetchedCount += Object.keys(normalized).length
+    }
+
+    if (fetchedCount === 0) break
+    iterations++
+  }
+
+  return recordMap
 }
 
 // Notion 페이지 ID로 특정 포스트 가져오기
