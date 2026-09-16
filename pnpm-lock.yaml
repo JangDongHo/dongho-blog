@@ -21,8 +21,8 @@ importers:
         specifier: ^15.1.6
         version: 15.5.9(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       notion-client:
-        specifier: ^7.7.3
-        version: 7.7.3
+        specifier: ^8.0.6
+        version: 8.0.6
       react:
         specifier: ^19.0.0
         version: 19.2.3
@@ -1136,6 +1136,9 @@ packages:
   eventemitter3@5.0.1:
     resolution: {integrity: sha512-GWkBvjiSZK87ELrYOSESUYeVIc9mvLLf/nXalMOS5dYrgZq9o5OVkbZAVM06CVxYsCwH9BDZFPlQTlPA1j4ahA==}
 
+  eventemitter3@5.0.4:
+    resolution: {integrity: sha512-mlsTRyGaPBjPedk6Bvw+aqbsXDtoAyAzm5MO7JgU+yVRyMQ5O8bD4Kcci7BS85f93veegeCPkL8R4GLClnjLFw==}
+
   exenv@1.2.2:
     resolution: {integrity: sha512-Z+ktTxTwv9ILfgKCk32OX3n/doe+OcLTRtqK9pcL+JsP3J1/VW8Uvl4ZjLlKqeW4rzK4oesDOGMEMRIZqtP4Iw==}
 
@@ -1694,6 +1697,10 @@ packages:
     resolution: {integrity: sha512-DeC6b7QBrZsRs3Y02A6A7lQyzFbsQbqgjI6UW0GigGWV+u1s25TycMr0XHZE4cJce7rY/vyw2ctMQqfDkIhUEA==}
     engines: {node: '>=18'}
 
+  memoize@11.0.0:
+    resolution: {integrity: sha512-cjsfZaC9b1clqPeIVMbb5dLHSXgdgGWGxdAU3oTUUkHiwWTKTBNnSmcqWJncNjYtBi3S8Rp0c5GIiyGztR8TRA==}
+    engines: {node: '>=22'}
+
   merge-refs@1.3.0:
     resolution: {integrity: sha512-nqXPXbso+1dcKDpPCXvwZyJILz+vSLqGGOnDrYHQYE+B8n9JTCekVLC65AfCpR4ggVyA/45Y0iR9LDyS2iI+zA==}
     peerDependencies:
@@ -1872,16 +1879,28 @@ packages:
     resolution: {integrity: sha512-X06Mfd/5aKsRHc0O0J5CUedwnPmnDtLF2+nq+KN9KSDlJHkPuh0JUviWjEWMe0SW/9TDdSLVPuk7L5gGTIA1/w==}
     engines: {node: '>=14.16'}
 
-  notion-client@7.7.3:
-    resolution: {integrity: sha512-rRRghrRDMVrUEEn1lyiyf3eGKCFAqVKvbkVau1X/36cUL7OhbwlP3XLSYVH5PCNJIRRIneB3oWTODOJvTPlppQ==}
+  normalize-url@9.0.1:
+    resolution: {integrity: sha512-ARftfC5HdUNu9jJeL8pHj8debUIHA2b91FizCoMzY4lG6dDX13jdvTK0TBe24IBDRf2HvJSzzwEPvmbkQWHRSg==}
+    engines: {node: '>=20'}
+
+  notion-client@8.0.6:
+    resolution: {integrity: sha512-a6tJu+J5A8IwXTLCx+sNIL9m8hWsH6b0O8P4Q6b6q9vDNA6xiyN4YKjABn0A71q1fSHSFa2ZhdiliVg/RZyNYA==}
     engines: {node: '>=18'}
 
   notion-types@7.7.3:
     resolution: {integrity: sha512-6HCcLi9zEcVJsvVUvCZ2f5o4ANtKsRfQuUcU74Trsv6C5raug8ERtmeM2s7YJfuLuP74YVDDSIXugO+XkUBFxg==}
     engines: {node: '>=18'}
 
+  notion-types@8.0.6:
+    resolution: {integrity: sha512-gmXbfVFTBjd2Yf8LK8c8g065cWI967hVWzI+XC50EvZ17UPqhZ/10VOWjtvLBZ+tvJSDctDCiz1L8xuCL6jJGQ==}
+    engines: {node: '>=18'}
+
   notion-utils@7.7.3:
     resolution: {integrity: sha512-MpOsUWdJJXKKc01zIYv90cxZZf7zL4dDSTssdqRFlDJsgGFFrD9uoKr0giOrMPiIoGwLka4TNeTORRDMYRZmoQ==}
+    engines: {node: '>=18'}
+
+  notion-utils@8.0.6:
+    resolution: {integrity: sha512-w2KvwggB3hZwB0gs651HUsQvvEpDi3UlWB2SQeFE+4pgwpJR/LANeywxdQMrE4662klEVUArff0xgEsiC/aaIw==}
     engines: {node: '>=18'}
 
   object-assign@4.1.1:
@@ -1938,17 +1957,25 @@ packages:
     resolution: {integrity: sha512-LaNjtRWUBY++zB5nE/NwcaoMylSPk+S+ZHNB1TzdbMJMny6dynpAGt7X/tl/QYq3TIeE6nxHppbo2LGymrG5Pw==}
     engines: {node: '>=10'}
 
-  p-map@7.0.4:
-    resolution: {integrity: sha512-tkAQEw8ysMzmkhgw8k+1U/iPhWNhykKnSk4Rd5zLoPJCuJaGRPo6YposrZgaxHKzDHdDWWZvE/Sk7hsL2X/CpQ==}
+  p-map@7.0.8:
+    resolution: {integrity: sha512-MitaVsCuCFIvOLLPIU7NnfrZvS9H9h7kwMUkDo+T2pEISaJD48IV9S8iIdXB7PsvvdxyYcsSTTrr90XKsbulNw==}
     engines: {node: '>=18'}
 
   p-queue@8.1.1:
     resolution: {integrity: sha512-aNZ+VfjobsWryoiPnEApGGmf5WmNsCo9xu8dfaYamG5qaLP7ClhLN6NgsFe6SwJ2UbLEBK5dv9x8Mn5+RVhMWQ==}
     engines: {node: '>=18'}
 
+  p-queue@9.3.3:
+    resolution: {integrity: sha512-NXAOdnEe5FsZJfT4oK84lE1Y5cFFdWlRuOo5tww8DyNMxyRXwn39fIkUtNLKppcPC+UYU/bXujNCUGDv01y7CA==}
+    engines: {node: '>=20'}
+
   p-timeout@6.1.4:
     resolution: {integrity: sha512-MyIV3ZA/PmyBN/ud8vV9XzwTrNtR4jFrObymZYnZqMmW0zA8Z17vnT0rBgFE/TlohB+YCHqXMgZzb3Csp49vqg==}
     engines: {node: '>=14.16'}
+
+  p-timeout@7.0.2:
+    resolution: {integrity: sha512-prbX4Z3YszrFNgH+MW5Zoeq3baXrMtP/MQnFeET90UB/GtGcGDQ5Usg9OCy6ETjTTntOw1SL2z9fMPUppN3Guw==}
+    engines: {node: '>=20'}
 
   parent-module@1.0.1:
     resolution: {integrity: sha512-GQ2EWRpQV8/o+Aw8YqtfZZPfNRWZYkbidE9k5rpl/hC3vtHHBfGm2Ifi6qWV+coDGkrUKZAxE3Lot5kcsRlh+g==}
@@ -2391,8 +2418,8 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
-  ufo@1.6.1:
-    resolution: {integrity: sha512-9a4/uxlTWJ4+a5i0ooc1rU7C7YOw3wT+UGqdeNNHWnOF9qcMBgLRS+4IYUqbczewFx4mLEig6gawh7X6mFlEkA==}
+  ufo@1.6.4:
+    resolution: {integrity: sha512-JFNbkD1Svwe0KvGi8GOeLcP4kAWQ609twvCdcHxq1oSL8svv39ZuSvajcD8B+5D0eL4+s1Is2D/O6KN3qcTeRA==}
 
   unbox-primitive@1.1.0:
     resolution: {integrity: sha512-nWJ91DjeOkej/TA8pXQ3myruKpKEYgqvpw9lz4OPHj/NWFNluYrjbz9j01CJ8yKQd2g4jFoOkINCTW2I5LEEyw==}
@@ -3628,6 +3655,8 @@ snapshots:
 
   eventemitter3@5.0.1: {}
 
+  eventemitter3@5.0.4: {}
+
   exenv@1.2.2: {}
 
   expand-template@2.0.3:
@@ -4337,6 +4366,10 @@ snapshots:
     dependencies:
       mimic-function: 5.0.1
 
+  memoize@11.0.0:
+    dependencies:
+      mimic-function: 5.0.1
+
   merge-refs@1.3.0(@types/react@19.2.7):
     optionalDependencies:
       '@types/react': 19.2.7
@@ -4614,14 +4647,18 @@ snapshots:
 
   normalize-url@8.1.0: {}
 
-  notion-client@7.7.3:
+  normalize-url@9.0.1: {}
+
+  notion-client@8.0.6:
     dependencies:
-      notion-types: 7.7.3
-      notion-utils: 7.7.3
+      notion-types: 8.0.6
+      notion-utils: 8.0.6
       ofetch: 1.5.1
-      p-map: 7.0.4
+      p-map: 7.0.8
 
   notion-types@7.7.3: {}
+
+  notion-types@8.0.6: {}
 
   notion-utils@7.7.3:
     dependencies:
@@ -4630,6 +4667,14 @@ snapshots:
       normalize-url: 8.1.0
       notion-types: 7.7.3
       p-queue: 8.1.1
+
+  notion-utils@8.0.6:
+    dependencies:
+      is-url-superb: 6.1.0
+      memoize: 11.0.0
+      normalize-url: 9.0.1
+      notion-types: 8.0.6
+      p-queue: 9.3.3
 
   object-assign@4.1.1: {}
 
@@ -4677,7 +4722,7 @@ snapshots:
     dependencies:
       destr: 2.0.5
       node-fetch-native: 1.6.7
-      ufo: 1.6.1
+      ufo: 1.6.4
 
   once@1.4.0:
     dependencies:
@@ -4707,14 +4752,21 @@ snapshots:
     dependencies:
       p-limit: 3.1.0
 
-  p-map@7.0.4: {}
+  p-map@7.0.8: {}
 
   p-queue@8.1.1:
     dependencies:
       eventemitter3: 5.0.1
       p-timeout: 6.1.4
 
+  p-queue@9.3.3:
+    dependencies:
+      eventemitter3: 5.0.4
+      p-timeout: 7.0.2
+
   p-timeout@6.1.4: {}
+
+  p-timeout@7.0.2: {}
 
   parent-module@1.0.1:
     dependencies:
@@ -5341,7 +5393,7 @@ snapshots:
 
   typescript@5.9.3: {}
 
-  ufo@1.6.1: {}
+  ufo@1.6.4: {}
 
   unbox-primitive@1.1.0:
     dependencies:
