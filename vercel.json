@@ -3,6 +3,7 @@
   "buildCommand": null,
   "installCommand": null,
   "outputDirectory": "public",
+  "trailingSlash": false,
   "redirects": [
     {
       "source": "/posts/1595ca9b-265e-807a-8b38-df67233fe05d",
@@ -1552,6 +1553,11 @@
     {
       "source": "/posts/3f25ca9b265e8050800feb613204917a",
       "destination": "https://dongho.me/posts/redis-%EC%9E%A5%EC%95%A0-%EC%8B%9C-rdbms%EC%9D%98-%EC%97%B0%EC%87%84%EC%A0%81%EC%9D%B8-%EC%9E%A5%EC%95%A0%EC%97%90-%EB%8C%80%EC%9D%91%ED%95%98%EA%B8%B0-%EC%9C%84%ED%95%9C-%EC%A0%84%EB%9E%B5",
+      "statusCode": 301
+    },
+    {
+      "source": "/",
+      "destination": "https://dongho.me/",
       "statusCode": 301
     },
     {
